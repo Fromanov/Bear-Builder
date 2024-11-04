@@ -1,4 +1,4 @@
-using SVS;
+﻿using SVS;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,13 +7,14 @@ using UnityEngine;
 public class RoadManager : MonoBehaviour
 {
     public PlacementManager placementManager;
-    public List<Vector3Int> tempPlacementPos = new List<Vector3Int>();
-    public List<Vector3Int> roadsPosToRecheck = new List<Vector3Int>();
+
+    public List<Vector3Int> temporaryPlacementPositions = new List<Vector3Int>();
+    public List<Vector3Int> roadPositionsToRecheck = new List<Vector3Int>();
+
+    private Vector3Int startPosition;
+    private bool placementMode = false;
 
     public RoadFixer roadFixer;
-
-    private Vector3Int startPos;
-    private bool placementMode = false;
 
     private void Start()
     {
@@ -22,85 +23,80 @@ public class RoadManager : MonoBehaviour
 
     public void PlaceRoad(Vector3Int position)
     {
-        if (placementManager.CheckIfPositionInBound(position) == false) 
-        {
+        if (placementManager.CheckIfPositionInBound(position) == false)
             return;
-        }
         if (placementManager.CheckIfPositionIsFree(position) == false)
-        {
             return;
-        }
-
-        if(placementMode == false)
+        if (placementMode == false)
         {
-            tempPlacementPos.Clear();
-            roadsPosToRecheck.Clear();
+            temporaryPlacementPositions.Clear();
+            roadPositionsToRecheck.Clear();
 
             placementMode = true;
-            startPos = position;
+            startPosition = position;
 
-            tempPlacementPos.Add(position);
-            placementManager.PlaceTempStructure(position, roadFixer.deadEnd, CellType.Road);            
+            temporaryPlacementPositions.Add(position);
+            placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road);
+
         }
         else
         {
-            placementManager.RemoveAllTempStructures();
-            tempPlacementPos.Clear();
+            placementManager.RemoveAllTemporaryStructures();
+            temporaryPlacementPositions.Clear();
 
-            foreach(Vector3Int posToFix in roadsPosToRecheck)
+            foreach (var positionsToFix in roadPositionsToRecheck)
             {
-                roadFixer.FixRoadAtPosition(placementManager, posToFix);
+                roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
             }
 
-            roadsPosToRecheck.Clear();
+            roadPositionsToRecheck.Clear();
 
-            tempPlacementPos = placementManager.GetPathBetween(startPos, position);
+            temporaryPlacementPositions = placementManager.GetPathBetween(startPosition, position);
 
-            foreach (Vector3Int tempPos in tempPlacementPos)
+            foreach (var temporaryPosition in temporaryPlacementPositions)
             {
-                if (placementManager.CheckIfPositionIsFree(tempPos) == false)
+                if (placementManager.CheckIfPositionIsFree(temporaryPosition) == false)
                 {
+                    roadPositionsToRecheck.Add(temporaryPosition);
                     continue;
-                }
-                placementManager.PlaceTempStructure(tempPos, roadFixer.deadEnd, CellType.Road);
+                }  
+                placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road);
             }
         }
 
         FixRoadPrefabs();
+
     }
 
     private void FixRoadPrefabs()
     {
-        foreach(Vector3Int tempPos in tempPlacementPos)
+        foreach (var temporaryPosition in temporaryPlacementPositions)
         {
-            roadFixer.FixRoadAtPosition(placementManager, tempPos);
-            List<Vector3Int> neighbours = placementManager.GetNeighbourTypesFor(tempPos, CellType.Road);
-
-            foreach (Vector3Int roadPos in neighbours)
+            roadFixer.FixRoadAtPosition(placementManager, temporaryPosition);
+            var neighbours = placementManager.GetNeighboursOfTypeFor(temporaryPosition, CellType.Road);
+            foreach (var roadposition in neighbours)
             {
-                if(roadsPosToRecheck.Contains(roadPos) == false)
+                if (roadPositionsToRecheck.Contains(roadposition)==false)
                 {
-                    roadsPosToRecheck.Add(roadPos);
-                }                
+                    roadPositionsToRecheck.Add(roadposition);
+                }
             }
         }
-
-        foreach(Vector3Int positionsToFix in roadsPosToRecheck)
+        foreach (var positionToFix in roadPositionsToRecheck)
         {
-            roadFixer.FixRoadAtPosition(placementManager, positionsToFix);
+            roadFixer.FixRoadAtPosition(placementManager, positionToFix);
         }
     }
 
-    public void FinishPlacigRoad()
+    public void FinishPlacingRoad()
     {
         placementMode = false;
-        placementManager.AddTempStructuresToStructureDictionary();
-
-        if(tempPlacementPos.Count > 0)
+        placementManager.AddtemporaryStructuresToStructureDictionary();
+        if (temporaryPlacementPositions.Count > 0)
         {
             AudioPlayer.instance.PlayPlacementSound();
         }
-        tempPlacementPos.Clear();
-        startPos = Vector3Int.zero;
+        temporaryPlacementPositions.Clear();
+        startPosition = Vector3Int.zero;
     }
 }
