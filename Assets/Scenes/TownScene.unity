@@ -1234,12 +1234,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 165090188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19216b9949030964081fff0b65fa0a87, type: 3}
+  m_Script: {fileID: 11500000, guid: 8184718f0378d9940997c24ed8d9bcaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   cameraMovement: {fileID: 2044889014}
-  inputManager: {fileID: 1867051153}
   roadManager: {fileID: 343442725}
+  inputManager: {fileID: 1867051153}
   uiController: {fileID: 681313534}
   structureManager: {fileID: 2026686716}
 --- !u!4 &165090190
@@ -3240,13 +3240,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 343442724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0c8e86c2ccfca25499ce6ff06e98158a, type: 3}
+  m_Script: {fileID: 11500000, guid: 7054b57a42330e649bc9933e1d187854, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   placementManager: {fileID: 1412159535}
-  tempPlacementPos: []
-  roadsPosToRecheck: []
-  roadFixer: {fileID: 0}
+  resourceManager: {fileID: 1915861643}
+  temporaryPlacementPositions: []
+  roadPositionsToRecheck: []
+  roadFixer: {fileID: 343442727}
 --- !u!4 &343442726
 Transform:
   m_ObjectHideFlags: 0
@@ -3271,7 +3272,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 343442724}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64dea3f733f923d43a1807c7c27c512b, type: 3}
+  m_Script: {fileID: 11500000, guid: 0d240120f38e6b14ba69d55efbab842b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   deadEnd: {fileID: 1120765361980748800, guid: 126bc1b54aa974c45b523eabbb58d51e, type: 3}
@@ -6671,13 +6672,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 681313528}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 69802ba8e297c974e887c5770e0a1ccc, type: 3}
+  m_Script: {fileID: 11500000, guid: 67e70a10840aa5e40833719b578def1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   placeRoadButton: {fileID: 504028732}
   placeHouseButton: {fileID: 1325324658}
   placeSpecialButton: {fileID: 1405492519}
-  outlineColor: {r: 0.90188676, g: 0.24333921, b: 0.86993617, a: 1}
+  outlineColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &695513889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14824,7 +14825,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1412159534}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50a651a95d5b5d942b7c5dcc85c347ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 2579291c11f2f7145bcb17a548190b11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   width: 15
@@ -20255,7 +20256,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1867051151}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2867b94395eb6534c9c91394f3f77289, type: 3}
+  m_Script: {fileID: 11500000, guid: 8fd0857953d78c6488b323c0df7095db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 2044889011}
@@ -21053,6 +21054,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1798360053511952705, guid: f04715c35df96d24daf46814db582a15, type: 3}
   m_PrefabInstance: {fileID: 1913209484}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1915861642
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1915861644}
+  - component: {fileID: 1915861643}
+  m_Layer: 0
+  m_Name: Resource Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1915861643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915861642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5ecfd1beeede24441896513f0ccf06c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  honey: 250
+  income: 0
+--- !u!4 &1915861644
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915861642}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1922138722
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22251,26 +22298,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 2026686715}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee50471f0066cda4a961406481443adf, type: 3}
+  m_Script: {fileID: 11500000, guid: c25b01563a8066a4db4058ad88bc11bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  housePrefabs:
-  - prefab: {fileID: 7864668269691680764, guid: 44c75b500bfebf84993deb17f38a98f6, type: 3}
-    weight: 0.25
-  - prefab: {fileID: 8172496117335426106, guid: 3527735cc30c8554aadd1222f91bf61f, type: 3}
-    weight: 0.25
+  housesPrefabs:
   - prefab: {fileID: 2769822920355022703, guid: 7102e40a9ba863a44838c4fd828cc22b, type: 3}
-    weight: 1
-  - prefab: {fileID: 801535651834448878, guid: 3240703552f47d04d9bf7207ca5bfa85, type: 3}
     weight: 1
   - prefab: {fileID: 8067785501733222628, guid: 4617fd335db984f4bb34f5eb561fd82b, type: 3}
     weight: 1
   specialPrefabs:
-  - prefab: {fileID: 8028572972740798329, guid: b4e018779a1b9aa44b2a988c6d8ddfda, type: 3}
-    weight: 0.25
   - prefab: {fileID: 3702253504043930072, guid: 838f9b485bb510747a4b89e3cb91e1bd, type: 3}
     weight: 1
   placementManager: {fileID: 1412159535}
+  resourceManager: {fileID: 1915861643}
 --- !u!4 &2026686717
 Transform:
   m_ObjectHideFlags: 0
@@ -22628,7 +22668,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23955f40d60750642a649bbde1a07458, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameCamera: {fileID: 0}
+  gameCamera: {fileID: 2044889011}
   cameraMovementSpeed: 5
 --- !u!1001 &2051241695
 PrefabInstance:
@@ -23135,3 +23175,4 @@ SceneRoots:
   - {fileID: 343442726}
   - {fileID: 1412159536}
   - {fileID: 2026686717}
+  - {fileID: 1915861644}

@@ -8,8 +8,8 @@ public class PlacementManager : MonoBehaviour
     public int width, height;
     Grid placementGrid;
 
-    private Dictionary<Vector3Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector3Int, StructureModel>();
-    private Dictionary<Vector3Int, StructureModel> structureDictionary = new Dictionary<Vector3Int, StructureModel>();
+    public Dictionary<Vector3Int, StructureModel> temporaryRoadobjects = new Dictionary<Vector3Int, StructureModel>();
+    public Dictionary<Vector3Int, StructureModel> structureDictionary = new Dictionary<Vector3Int, StructureModel>();
 
     private void Start()
     {
@@ -23,7 +23,7 @@ public class PlacementManager : MonoBehaviour
 
     internal bool CheckIfPositionInBound(Vector3Int position)
     {
-        if(position.x >= 0 && position.x < width && position.z >=0 && position.z < height)
+        if (position.x >= 0 && position.x < width && position.z >= 0 && position.z < height)
         {
             return true;
         }
@@ -123,5 +123,12 @@ public class PlacementManager : MonoBehaviour
             temporaryRoadobjects[position].SwapModel(newModel, rotation);
         else if (structureDictionary.ContainsKey(position))
             structureDictionary[position].SwapModel(newModel, rotation);
+    }
+
+    public void RemoveObjectAt(Vector3Int position)
+    {
+        Destroy(structureDictionary[position].gameObject);
+        structureDictionary.Remove(position);
+        placementGrid[position.x, position.z] = CellType.Empty;
     }
 }

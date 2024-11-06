@@ -8,6 +8,8 @@ public class RoadManager : MonoBehaviour
 {
     public PlacementManager placementManager;
 
+    public ResourceManager resourceManager;
+
     public List<Vector3Int> temporaryPlacementPositions = new List<Vector3Int>();
     public List<Vector3Int> roadPositionsToRecheck = new List<Vector3Int>();
 
@@ -27,6 +29,9 @@ public class RoadManager : MonoBehaviour
             return;
         if (placementManager.CheckIfPositionIsFree(position) == false)
             return;
+        if (resourceManager.CanAfford(CellType.Road) == false)
+            return;
+        resourceManager.SpendHoneyToBuild(CellType.Road);
         if (placementMode == false)
         {
             temporaryPlacementPositions.Clear();
@@ -59,7 +64,7 @@ public class RoadManager : MonoBehaviour
                 {
                     roadPositionsToRecheck.Add(temporaryPosition);
                     continue;
-                }  
+                }
                 placementManager.PlaceTemporaryStructure(temporaryPosition, roadFixer.deadEnd, CellType.Road);
             }
         }
@@ -76,7 +81,7 @@ public class RoadManager : MonoBehaviour
             var neighbours = placementManager.GetNeighboursOfTypeFor(temporaryPosition, CellType.Road);
             foreach (var roadposition in neighbours)
             {
-                if (roadPositionsToRecheck.Contains(roadposition)==false)
+                if (roadPositionsToRecheck.Contains(roadposition) == false)
                 {
                     roadPositionsToRecheck.Add(roadposition);
                 }
@@ -98,5 +103,29 @@ public class RoadManager : MonoBehaviour
         }
         temporaryPlacementPositions.Clear();
         startPosition = Vector3Int.zero;
+    }
+
+    public void DeleteObject(Vector3Int position)
+    {
+        if (placementManager.CheckIfPositionIsFree(position) == false)
+        {
+            placementManager.RemoveObjectAt(position);
+            AudioPlayer.instance.PlayPlacementSound();
+
+            var neighbours = placementManager.GetNeighboursOfTypeFor(position, CellType.Road);
+            foreach (var roadposition in neighbours)
+            {
+                if (roadPositionsToRecheck.Contains(roadposition) == false)
+                {
+                    roadPositionsToRecheck.Add(roadposition);
+                }
+
+            }
+
+            foreach (var positionToFix in roadPositionsToRecheck)
+            {
+                roadFixer.FixRoadAtPosition(placementManager, positionToFix);
+            }
+        }
     }
 }

@@ -5,6 +5,7 @@ using UnityEngine;
 public class StructureModel : MonoBehaviour
 {
     float yHeight = 0;
+    CellType type;
 
     public void CreateModel(GameObject model)
     {
