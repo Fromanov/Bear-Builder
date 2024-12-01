@@ -5,12 +5,13 @@ using UnityEngine;
 public class StructureModel : MonoBehaviour
 {
     float yHeight = 0;
-    CellType type;
-
+    public CellType type;
+    public bool isActive;
     public void CreateModel(GameObject model)
     {
         var structure = Instantiate(model, transform);
         yHeight = structure.transform.position.y;
+        isActive = true;
     }
 
     public void SwapModel(GameObject model, Quaternion rotation)

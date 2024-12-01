@@ -24,13 +24,14 @@ public class StructureManager : MonoBehaviour
     {
         if (CheckPositionBeforePlacement(position))
         {
-            if (resourceManager.CanAfford(CellType.Structure))
-            {
-                resourceManager.SpendHoneyToBuild(CellType.Structure);
-                int randomIndex = GetRandomWeightedIndex(houseWeights);
-                placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure);
-                AudioPlayer.instance.PlayPlacementSound();
-            }
+            if (!resourceManager.CanAfford(CellType.Structure)) return;
+
+            resourceManager.SpendHoneyToBuild(CellType.Structure);
+            int randomIndex = GetRandomWeightedIndex(houseWeights);
+            placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure);
+            AudioPlayer.instance.PlayPlacementSound();
+            resourceManager.Recount();
+
         }
     }
 
@@ -38,14 +39,14 @@ public class StructureManager : MonoBehaviour
     {
         if (CheckPositionBeforePlacement(position))
         {
-            if (resourceManager.CanAfford(CellType.SpecialStructure))
-            {
-                resourceManager.SpendHoneyToBuild(CellType.SpecialStructure);
-                resourceManager.AddIncome(1);
-                int randomIndex = GetRandomWeightedIndex(specialWeights);
-                placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.Structure);
-                AudioPlayer.instance.PlayPlacementSound();
-            }
+            if (!resourceManager.CanAfford(CellType.SpecialStructure)) return;
+
+            resourceManager.SpendHoneyToBuild(CellType.SpecialStructure);
+            int randomIndex = GetRandomWeightedIndex(specialWeights);
+            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure);
+            AudioPlayer.instance.PlayPlacementSound();
+            resourceManager.Recount();
+
         }
     }
 

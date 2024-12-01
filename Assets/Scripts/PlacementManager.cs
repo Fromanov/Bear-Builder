@@ -75,6 +75,17 @@ public class PlacementManager : MonoBehaviour
         return neighbours;
     }
 
+    internal List<Vector3Int> GetNeighboursFor(Vector3Int position)
+    {
+        var neighbourVertices = placementGrid.GetAllAdjacentCells(position.x, position.z);
+        List<Vector3Int> neighbours = new List<Vector3Int>();
+        foreach (var point in neighbourVertices)
+        {
+            neighbours.Add(new Vector3Int(point.X, 0, point.Y));
+        }
+        return neighbours;
+    }
+
     private StructureModel CreateANewStructureModel(Vector3Int position, GameObject structurePrefab, CellType type)
     {
         GameObject structure = new GameObject(type.ToString());
@@ -82,6 +93,7 @@ public class PlacementManager : MonoBehaviour
         structure.transform.localPosition = position;
         var structureModel = structure.AddComponent<StructureModel>();
         structureModel.CreateModel(structurePrefab);
+        structureModel.type = type;
         return structureModel;
     }
 
@@ -113,6 +125,7 @@ public class PlacementManager : MonoBehaviour
         {
             structureDictionary.Add(structure.Key, structure.Value);
             DestroyNatureAt(structure.Key);
+            ReActivateNeighbourStructures(structure.Key);
         }
         temporaryRoadobjects.Clear();
     }
@@ -130,5 +143,28 @@ public class PlacementManager : MonoBehaviour
         Destroy(structureDictionary[position].gameObject);
         structureDictionary.Remove(position);
         placementGrid[position.x, position.z] = CellType.Empty;
+    }
+
+    public void ReActivateNeighbourStructures(Vector3Int position)
+    {
+        List<Vector3Int> neighbours = GetNeighboursFor(position);
+        foreach (var neighbour in neighbours)
+        {
+            if (!structureDictionary.ContainsKey(neighbour)) continue;
+
+            List<Vector3Int> neighbourNeighbours = GetNeighboursFor(neighbour);
+            bool isActive = false;
+            foreach (var neighboursNeighbour in neighbourNeighbours)
+            {
+                if (!structureDictionary.ContainsKey(neighboursNeighbour)) continue;
+
+                if (structureDictionary[neighboursNeighbour].type == CellType.Road)
+                {
+                    isActive = true;
+                }
+
+            }
+            structureDictionary[neighbour].isActive = isActive;
+        }
     }
 }

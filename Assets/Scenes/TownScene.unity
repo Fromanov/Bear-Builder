@@ -21083,8 +21083,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ecfd1beeede24441896513f0ccf06c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  placementManager: {fileID: 1412159535}
   honey: 250
   income: 0
+  requiedBears: 0
+  producedBears: 0
+  requiedEnergy: 0
+  producedEnergy: 0
 --- !u!4 &1915861644
 Transform:
   m_ObjectHideFlags: 0

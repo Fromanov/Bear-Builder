@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RoadManager : MonoBehaviour
 {
@@ -70,7 +71,6 @@ public class RoadManager : MonoBehaviour
         }
 
         FixRoadPrefabs();
-
     }
 
     private void FixRoadPrefabs()
@@ -93,7 +93,7 @@ public class RoadManager : MonoBehaviour
         }
     }
 
-    public void FinishPlacingRoad()
+    public void FinishPlacingRoad(Vector3Int position)
     {
         placementMode = false;
         placementManager.AddtemporaryStructuresToStructureDictionary();
@@ -103,6 +103,8 @@ public class RoadManager : MonoBehaviour
         }
         temporaryPlacementPositions.Clear();
         startPosition = Vector3Int.zero;
+
+        resourceManager.Recount();
     }
 
     public void DeleteObject(Vector3Int position)
@@ -126,6 +128,10 @@ public class RoadManager : MonoBehaviour
             {
                 roadFixer.FixRoadAtPosition(placementManager, positionToFix);
             }
+
+            placementManager.ReActivateNeighbourStructures(position);
+
+            resourceManager.Recount();
         }
     }
 }
