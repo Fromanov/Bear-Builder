@@ -41,15 +41,28 @@ public class ResourceManager : MonoBehaviour
         structureDictionary.Add(CellType.Road, _newBuilding);
 
         _newBuilding = new();
+        _newBuilding.cost = 15;
+        _newBuilding.producedEnergy = 1;
+        structureDictionary.Add(CellType.Windmill, _newBuilding);
+
+        _newBuilding = new();
         _newBuilding.cost = 25;
+        _newBuilding.requiedEnergy = 1;
         _newBuilding.producedBears = 2;
-        structureDictionary.Add(CellType.Structure, _newBuilding);
+        structureDictionary.Add(CellType.House, _newBuilding);
 
         _newBuilding = new();
         _newBuilding.cost = 50;
         _newBuilding.requiedBears = 1;
+        _newBuilding.requiedEnergy = 1;
         _newBuilding.income = 0.5f;
-        structureDictionary.Add(CellType.SpecialStructure, _newBuilding);
+        structureDictionary.Add(CellType.Shop, _newBuilding);
+
+        _newBuilding = new();
+        _newBuilding.cost = 70;
+        _newBuilding.requiedBears = 2;
+        _newBuilding.producedEnergy = 5;
+        structureDictionary.Add(CellType.ElectricGenerator, _newBuilding);
     }
 
     // Update is called once per frame

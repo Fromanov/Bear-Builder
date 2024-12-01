@@ -93,7 +93,7 @@ public class RoadManager : MonoBehaviour
         }
     }
 
-    public void FinishPlacingRoad(Vector3Int position)
+    public void FinishPlacingRoad()
     {
         placementMode = false;
         placementManager.AddtemporaryStructuresToStructureDictionary();

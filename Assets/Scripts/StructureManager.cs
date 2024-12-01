@@ -24,11 +24,11 @@ public class StructureManager : MonoBehaviour
     {
         if (CheckPositionBeforePlacement(position))
         {
-            if (!resourceManager.CanAfford(CellType.Structure)) return;
+            if (!resourceManager.CanAfford(CellType.House)) return;
 
-            resourceManager.SpendHoneyToBuild(CellType.Structure);
+            resourceManager.SpendHoneyToBuild(CellType.House);
             int randomIndex = GetRandomWeightedIndex(houseWeights);
-            placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.Structure);
+            placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.House);
             AudioPlayer.instance.PlayPlacementSound();
             resourceManager.Recount();
 
@@ -39,11 +39,11 @@ public class StructureManager : MonoBehaviour
     {
         if (CheckPositionBeforePlacement(position))
         {
-            if (!resourceManager.CanAfford(CellType.SpecialStructure)) return;
+            if (!resourceManager.CanAfford(CellType.Shop)) return;
 
-            resourceManager.SpendHoneyToBuild(CellType.SpecialStructure);
+            resourceManager.SpendHoneyToBuild(CellType.Shop);
             int randomIndex = GetRandomWeightedIndex(specialWeights);
-            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.SpecialStructure);
+            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.Shop);
             AudioPlayer.instance.PlayPlacementSound();
             resourceManager.Recount();
 
