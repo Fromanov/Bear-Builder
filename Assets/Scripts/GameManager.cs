@@ -18,21 +18,26 @@ public class GameManager : MonoBehaviour
     {
         uiController.OnRoadPlacement += RoadPlacementHandler;
         uiController.OnHousePlacement += HousePlacementHandler;
-        uiController.OnSpecialPlacement += SpecialPlacementHandler;
+        uiController.OnWindmillPlacement += WindmillPlacementHandler;
     }
 
-    private void SpecialPlacementHandler()
+    private void StructurePlacementHandler()
     {
         ClearInputActions();
-        inputManager.OnMouseClick += structureManager.PlaceSpecial;
+        inputManager.OnMouseClick += structureManager.PlaceStructure;
         inputManager.OnRMBUp += roadManager.DeleteObject;
+
+    }
+    private void WindmillPlacementHandler()
+    {
+        StructurePlacementHandler();
+        structureManager.structureType = CellType.Windmill;
     }
 
     private void HousePlacementHandler()
     {
-        ClearInputActions();
-        inputManager.OnMouseClick += structureManager.PlaceHouse;
-        inputManager.OnRMBUp += roadManager.DeleteObject;
+        StructurePlacementHandler();
+        structureManager.structureType = CellType.House;
     }
 
     private void RoadPlacementHandler()

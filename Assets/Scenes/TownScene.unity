@@ -5499,7 +5499,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Special
+  m_Text: Windmill
 --- !u!222 &551913500
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6677,7 +6677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placeRoadButton: {fileID: 504028732}
   placeHouseButton: {fileID: 1325324658}
-  placeSpecialButton: {fileID: 1405492519}
+  placeWindmillButton: {fileID: 1405492519}
   outlineColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!1001 &695513889
 PrefabInstance:
@@ -14676,7 +14676,7 @@ GameObject:
   - component: {fileID: 1405492519}
   - component: {fileID: 1405492521}
   m_Layer: 5
-  m_Name: PlaceSpecialBtn
+  m_Name: PlaceWindmillBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21085,11 +21085,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   placementManager: {fileID: 1412159535}
   honey: 250
-  income: 0
+  incomeHoney: 0
+  constructionPolymer: 250
+  incomeConstructionPolymer: 0
   requiedBears: 0
   producedBears: 0
   requiedEnergy: 0
   producedEnergy: 0
+  honeyPerBear: 0
 --- !u!4 &1915861644
 Transform:
   m_ObjectHideFlags: 0
@@ -22306,16 +22309,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25b01563a8066a4db4058ad88bc11bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  housesPrefabs:
-  - prefab: {fileID: 2769822920355022703, guid: 7102e40a9ba863a44838c4fd828cc22b, type: 3}
-    weight: 1
-  - prefab: {fileID: 8067785501733222628, guid: 4617fd335db984f4bb34f5eb561fd82b, type: 3}
-    weight: 1
-  specialPrefabs:
-  - prefab: {fileID: 3702253504043930072, guid: 838f9b485bb510747a4b89e3cb91e1bd, type: 3}
-    weight: 1
+  structures:
+  - type: 2
+    prefab: {fileID: 899243954413507757, guid: f939653fea539134c908bf914ff23571, type: 3}
+  - type: 3
+    prefab: {fileID: 2769822920355022703, guid: 7102e40a9ba863a44838c4fd828cc22b, type: 3}
+  - type: 4
+    prefab: {fileID: 8067785501733222628, guid: 4617fd335db984f4bb34f5eb561fd82b, type: 3}
+  - type: 5
+    prefab: {fileID: 3702253504043930072, guid: 838f9b485bb510747a4b89e3cb91e1bd, type: 3}
+  - type: 6
+    prefab: {fileID: 7993729090055200291, guid: b2e37dd66f813c348aedeb7b439ade96, type: 3}
   placementManager: {fileID: 1412159535}
   resourceManager: {fileID: 1915861643}
+  structureType: 0
 --- !u!4 &2026686717
 Transform:
   m_ObjectHideFlags: 0

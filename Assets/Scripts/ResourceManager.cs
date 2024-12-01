@@ -9,8 +9,11 @@ using UnityEngine;
 [Serializable]
 public class Building
 {
-    public int cost;
-    public float income;
+    public int costHoney;
+    public float incomeHoney;
+
+    public int costConstructionPolymer;
+    public float incomeConstructionPolymer;
 
     public int requiedBears;
     public int producedBears;
@@ -23,7 +26,10 @@ public class ResourceManager : MonoBehaviour
     public PlacementManager placementManager;
     
     public float honey;
-    public float income;
+    public float incomeHoney;
+
+    public float constructionPolymer;
+    public float incomeConstructionPolymer;
 
     public int requiedBears;
     public int producedBears;
@@ -31,35 +37,46 @@ public class ResourceManager : MonoBehaviour
     public int requiedEnergy;
     public int producedEnergy;
 
+    public float honeyPerBear;
+
     public Dictionary<CellType, Building> structureDictionary = new();
 
     // Start is called before the first frame update
     void Start()
     {
+        honeyPerBear = 0.1f;
+
         Building _newBuilding = new();
-        _newBuilding.cost = 5;
+        _newBuilding.costConstructionPolymer = 5;
         structureDictionary.Add(CellType.Road, _newBuilding);
 
         _newBuilding = new();
-        _newBuilding.cost = 15;
+        _newBuilding.costConstructionPolymer = 15;
         _newBuilding.producedEnergy = 1;
         structureDictionary.Add(CellType.Windmill, _newBuilding);
 
         _newBuilding = new();
-        _newBuilding.cost = 25;
+        _newBuilding.costConstructionPolymer = 25;
         _newBuilding.requiedEnergy = 1;
         _newBuilding.producedBears = 2;
         structureDictionary.Add(CellType.House, _newBuilding);
 
         _newBuilding = new();
-        _newBuilding.cost = 50;
+        _newBuilding.costConstructionPolymer = 30;
+        _newBuilding.requiedEnergy = 1;
+        _newBuilding.requiedBears = 1;
+        _newBuilding.incomeHoney = 1;
+        structureDictionary.Add(CellType.Apiary, _newBuilding);
+
+        _newBuilding = new();
+        _newBuilding.costConstructionPolymer = 50;
         _newBuilding.requiedBears = 1;
         _newBuilding.requiedEnergy = 1;
-        _newBuilding.income = 0.5f;
+        _newBuilding.incomeConstructionPolymer = 0.5f;
         structureDictionary.Add(CellType.Shop, _newBuilding);
 
         _newBuilding = new();
-        _newBuilding.cost = 70;
+        _newBuilding.costConstructionPolymer = 70;
         _newBuilding.requiedBears = 2;
         _newBuilding.producedEnergy = 5;
         structureDictionary.Add(CellType.ElectricGenerator, _newBuilding);
@@ -68,26 +85,30 @@ public class ResourceManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        honey += Time.deltaTime * income;
+        honey += Time.deltaTime * incomeHoney;
+        constructionPolymer += Time.deltaTime * incomeConstructionPolymer;
     }
 
-    public bool CanAfford(CellType type)
+    public bool CanAfford(CellType type, int amount = 1)
     {
-        if (honey > structureDictionary[type].cost)
+        if (honey >= structureDictionary[type].costHoney * amount 
+            && constructionPolymer >= structureDictionary[type].costConstructionPolymer * amount)
         {
             return true;
         }
         return false;
     }
 
-    public void SpendHoneyToBuild(CellType type)
+    public void SpendResourceToBuild(CellType type, int amount = 1)
     {
-        honey -= structureDictionary[type].cost;
+        honey -= structureDictionary[type].costHoney * amount;
+        constructionPolymer -= structureDictionary[type].costConstructionPolymer * amount;
     }
 
     public void Recount()
     {
-        income = 0;
+        incomeHoney = 0;
+        incomeConstructionPolymer = 0;
 
         requiedBears = 0;
         producedBears = 0;
@@ -99,7 +120,8 @@ public class ResourceManager : MonoBehaviour
         {
             if (structure.isActive)
                 {
-                income += structureDictionary[structure.type].income;
+                incomeHoney += structureDictionary[structure.type].incomeHoney;
+                incomeConstructionPolymer += structureDictionary[structure.type].incomeConstructionPolymer;
                 requiedBears += structureDictionary[structure.type].requiedBears;
                 producedBears += structureDictionary[structure.type].producedBears;
                 requiedEnergy += structureDictionary[structure.type].requiedEnergy;
@@ -108,6 +130,11 @@ public class ResourceManager : MonoBehaviour
         }
 
         if (requiedBears > producedBears || requiedEnergy > producedEnergy)
-        { income = 0;}
+        { 
+            incomeHoney = 0;
+            incomeConstructionPolymer = 0;
+        }
+
+        incomeHoney -= honeyPerBear * producedBears;
     }
 }

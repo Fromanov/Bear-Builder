@@ -52,6 +52,7 @@ public enum CellType
     Road,
     Windmill,
     House,
+    Apiary,
     Shop,
     ElectricGenerator,
     None
@@ -92,7 +93,7 @@ public class Grid
             {
                 _roadList.Remove(new Point(i, j));
             }
-            if (value == CellType.Shop)
+            if (value != CellType.Road && value != CellType.Empty && value != CellType.None)
             {
                 _specialStructure.Add(new Point(i, j));
             }

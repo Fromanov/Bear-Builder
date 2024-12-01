@@ -5,71 +5,40 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+[Serializable]
+public struct Structure
+{
+    public CellType type;
+    public GameObject prefab;
+}
+
+
 public class StructureManager : MonoBehaviour
 {
-    public StructurePrefabWeighted[] housesPrefabs, specialPrefabs;
+    public Structure[] structures;
     public PlacementManager placementManager;
 
     public ResourceManager resourceManager;
 
-    private float[] houseWeights, specialWeights;
+    public CellType structureType;
 
-    private void Start()
-    {
-        houseWeights = housesPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-        specialWeights = specialPrefabs.Select(prefabStats => prefabStats.weight).ToArray();
-    }
-
-    public void PlaceHouse(Vector3Int position)
+    public void PlaceStructure(Vector3Int position)
     {
         if (CheckPositionBeforePlacement(position))
         {
-            if (!resourceManager.CanAfford(CellType.House)) return;
+            if (!resourceManager.CanAfford(structureType)) return;
 
-            resourceManager.SpendHoneyToBuild(CellType.House);
-            int randomIndex = GetRandomWeightedIndex(houseWeights);
-            placementManager.PlaceObjectOnTheMap(position, housesPrefabs[randomIndex].prefab, CellType.House);
-            AudioPlayer.instance.PlayPlacementSound();
-            resourceManager.Recount();
-
-        }
-    }
-
-    public void PlaceSpecial(Vector3Int position)
-    {
-        if (CheckPositionBeforePlacement(position))
-        {
-            if (!resourceManager.CanAfford(CellType.Shop)) return;
-
-            resourceManager.SpendHoneyToBuild(CellType.Shop);
-            int randomIndex = GetRandomWeightedIndex(specialWeights);
-            placementManager.PlaceObjectOnTheMap(position, specialPrefabs[randomIndex].prefab, CellType.Shop);
-            AudioPlayer.instance.PlayPlacementSound();
-            resourceManager.Recount();
-
-        }
-    }
-
-    private int GetRandomWeightedIndex(float[] weights)
-    {
-        float sum = 0f;
-        for (int i = 0; i < weights.Length; i++)
-        {
-            sum += weights[i];
-        }
-
-        float randomValue = UnityEngine.Random.Range(0, sum);
-        float tempSum = 0;
-        for (int i = 0; i < weights.Length; i++)
-        {
-            //0->weihg[0] weight[0]->weight[1]
-            if (randomValue >= tempSum && randomValue < tempSum + weights[i])
+            resourceManager.SpendResourceToBuild(structureType);
+            foreach (var structure in structures)
             {
-                return i;
+                if (structure.type == structureType)
+                {
+                    placementManager.PlaceObjectOnTheMap(position, structure.prefab, structureType);
+                }
             }
-            tempSum += weights[i];
+            AudioPlayer.instance.PlayPlacementSound();
+            resourceManager.Recount();
         }
-        return 0;
     }
 
     private bool CheckPositionBeforePlacement(Vector3Int position)
