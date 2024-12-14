@@ -52,6 +52,10 @@ public class PlacementManager : MonoBehaviour
         return CheckIfPositionIsOfType(position, CellType.Empty);
     }
 
+    internal bool CheckIfPositionIsFreeForRoad(Vector3Int position)
+    {
+        return CheckIfPositionIsOfType(position, CellType.Empty) || CheckIfPositionIsOfType(position, CellType.Road);
+    }
     private bool CheckIfPositionIsOfType(Vector3Int position, CellType type)
     {
         return placementGrid[position.x, position.z] == type;

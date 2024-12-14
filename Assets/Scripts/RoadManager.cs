@@ -28,7 +28,7 @@ public class RoadManager : MonoBehaviour
     {
         if (placementManager.CheckIfPositionInBound(position) == false)
             return;
-        if (placementManager.CheckIfPositionIsFree(position) == false)
+        if (placementManager.CheckIfPositionIsFreeForRoad(position) == false)
             return;
         if (placementMode == false)
         {
@@ -92,7 +92,7 @@ public class RoadManager : MonoBehaviour
 
     public void FinishPlacingRoad()
     {
-        if (resourceManager.CanAfford(CellType.Road, temporaryPlacementPositions.Count) == false)
+        if (resourceManager.CanAfford(CellType.Road, placementManager.temporaryRoadobjects.Count) == false)
         {
             placementManager.RemoveAllTemporaryStructures();
             temporaryPlacementPositions.Clear();
@@ -103,7 +103,7 @@ public class RoadManager : MonoBehaviour
             return;
         }
 
-        resourceManager.SpendResourceToBuild(CellType.Road, temporaryPlacementPositions.Count);
+        resourceManager.SpendResourceToBuild(CellType.Road, placementManager.temporaryRoadobjects.Count);
 
         placementMode = false;
         placementManager.AddtemporaryStructuresToStructureDictionary();
