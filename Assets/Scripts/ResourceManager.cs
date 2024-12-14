@@ -31,12 +31,12 @@ public class ResourceManager : MonoBehaviour
     public float constructionPolymer;
     public float incomeConstructionPolymer;
 
+    public int bears;
     public int requiedBears;
-    public int producedBears;
 
+    public int energy;
     public int requiedEnergy;
-    public int producedEnergy;
-
+    
     public float honeyPerBear;
 
     public Dictionary<CellType, Building> structureDictionary = new();
@@ -111,10 +111,10 @@ public class ResourceManager : MonoBehaviour
         incomeConstructionPolymer = 0;
 
         requiedBears = 0;
-        producedBears = 0;
+        bears = 0;
 
         requiedEnergy = 0;
-        producedEnergy = 0;
+        energy = 0;
 
         foreach (var structure in placementManager.structureDictionary.Values)
         {
@@ -123,18 +123,18 @@ public class ResourceManager : MonoBehaviour
                 incomeHoney += structureDictionary[structure.type].incomeHoney;
                 incomeConstructionPolymer += structureDictionary[structure.type].incomeConstructionPolymer;
                 requiedBears += structureDictionary[structure.type].requiedBears;
-                producedBears += structureDictionary[structure.type].producedBears;
+                bears += structureDictionary[structure.type].producedBears;
                 requiedEnergy += structureDictionary[structure.type].requiedEnergy;
-                producedEnergy += structureDictionary[structure.type].producedEnergy;
+                energy += structureDictionary[structure.type].producedEnergy;
             }
         }
 
-        if (requiedBears > producedBears || requiedEnergy > producedEnergy)
+        if (requiedBears > bears || requiedEnergy > energy)
         { 
             incomeHoney = 0;
             incomeConstructionPolymer = 0;
         }
 
-        incomeHoney -= honeyPerBear * producedBears;
+        incomeHoney -= honeyPerBear * bears;
     }
 }
