@@ -39,6 +39,8 @@ public class ResourceManager : MonoBehaviour
     
     public float honeyPerBear;
 
+    public UIController uiController;
+
     public Dictionary<CellType, Building> structureDictionary = new();
 
     // Start is called before the first frame update
@@ -96,7 +98,13 @@ public class ResourceManager : MonoBehaviour
         {
             return true;
         }
+        else 
+        {
+            Debug.Log("Cant afford.");
+            uiController.ShowPopUpMessage("Cant afford.");
+        }
         return false;
+        
     }
 
     public void SpendResourceToBuild(CellType type, int amount = 1)

@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
         uiController.OnRoadPlacement += RoadPlacementHandler;
         uiController.OnHousePlacement += HousePlacementHandler;
         uiController.OnWindmillPlacement += WindmillPlacementHandler;
+        uiController.OnApiaryPlacement += ApiaryPlacementHandler;
+        uiController.OnShopPlacement += ShopPlacementHandler;
+        uiController.OnElectricGeneratorPlacement += ElectricGeneratorPlacementHandler;
     }
 
     private void StructurePlacementHandler(CellType type)
