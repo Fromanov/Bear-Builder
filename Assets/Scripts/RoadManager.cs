@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 public class RoadManager : MonoBehaviour
 {
     public PlacementManager placementManager;
-
+    
     public ResourceManager resourceManager;
 
     public List<Vector3Int> temporaryPlacementPositions = new List<Vector3Int>();
@@ -39,8 +39,10 @@ public class RoadManager : MonoBehaviour
             startPosition = position;
 
             temporaryPlacementPositions.Add(position);
-            placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road);
-
+            if (placementManager.CheckIfPositionIsFree(position))
+            {
+                placementManager.PlaceTemporaryStructure(position, roadFixer.deadEnd, CellType.Road);
+            }
         }
         else
         {
@@ -92,10 +94,11 @@ public class RoadManager : MonoBehaviour
 
     public void FinishPlacingRoad()
     {
-        if (resourceManager.CanAfford(CellType.Road, placementManager.temporaryRoadobjects.Count) == false)
+        if (resourceManager.CanAfford(CellType.Road, placementManager.temporaryRoadobjects.Count) == false || placementManager.temporaryRoadobjects.Count == 0)
         {
             placementManager.RemoveAllTemporaryStructures();
             temporaryPlacementPositions.Clear();
+            roadPositionsToRecheck.Clear();
             placementMode = false;
             startPosition = Vector3Int.zero;
             FixRoadPrefabs();
@@ -112,6 +115,7 @@ public class RoadManager : MonoBehaviour
             AudioPlayer.instance.PlayPlacementSound();
         }
         temporaryPlacementPositions.Clear();
+        roadPositionsToRecheck.Clear();
         startPosition = Vector3Int.zero;
 
         resourceManager.Recount();

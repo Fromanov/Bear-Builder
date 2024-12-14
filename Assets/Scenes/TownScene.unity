@@ -416,6 +416,54 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3970261373664373580, guid: b251aac2e265df74f91db1dee1baee73, type: 3}
   m_PrefabInstance: {fileID: 36899997}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &42021463
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 42021465}
+  - component: {fileID: 42021464}
+  m_Layer: 0
+  m_Name: Terrain Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &42021464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42021463}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498027c09af6b0744857a618022da84b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Plane: {fileID: 185400025}
+  Ground: {fileID: 1874407663}
+  Nature: {fileID: 1352260909}
+  Grass: {fileID: 2100000, guid: 0e0bb72ca40607e4c8c09cbc92afd37f, type: 2}
+--- !u!4 &42021465
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42021463}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 11.838209, y: 5.4024997, z: 14.399889}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &48116277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1550,7 +1598,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1, z: 1.5}
+  m_LocalScale: {x: 1.7, y: 1, z: 1.7}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 970204964}
@@ -6675,10 +6723,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e70a10840aa5e40833719b578def1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  showBuildPanelButton: {fileID: 1405492519}
   placeRoadButton: {fileID: 504028732}
   placeHouseButton: {fileID: 1325324658}
   placeWindmillButton: {fileID: 1405492519}
+  placeApiaryButton: {fileID: 1405492519}
+  placeShopButton: {fileID: 1405492519}
+  placeElectricGeneratorButton: {fileID: 1405492519}
   outlineColor: {r: 0, g: 0, b: 0, a: 0}
+  animator: {fileID: 0}
 --- !u!1001 &695513889
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9722,6 +9775,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 970204964}
+  - component: {fileID: 970204965}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -9747,6 +9801,22 @@ Transform:
   - {fileID: 1352260911}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &970204965
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970204963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 498027c09af6b0744857a618022da84b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Plane: {fileID: 0}
+  Ground: {fileID: 0}
+  Nature: {fileID: 0}
+  Grass: {fileID: 0}
 --- !u!1001 &974467084
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -20559,7 +20629,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -1.51, z: 0}
-  m_LocalScale: {x: 15, y: 3, z: 15}
+  m_LocalScale: {x: 17, y: 3, z: 17}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 970204964}
@@ -21088,10 +21158,10 @@ MonoBehaviour:
   incomeHoney: 0
   constructionPolymer: 250
   incomeConstructionPolymer: 0
+  bears: 0
   requiedBears: 0
-  producedBears: 0
+  energy: 0
   requiedEnergy: 0
-  producedEnergy: 0
   honeyPerBear: 0
 --- !u!4 &1915861644
 Transform:
@@ -23188,3 +23258,4 @@ SceneRoots:
   - {fileID: 1412159536}
   - {fileID: 2026686717}
   - {fileID: 1915861644}
+  - {fileID: 42021465}
