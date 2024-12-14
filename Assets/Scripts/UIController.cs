@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class UIController : MonoBehaviour
 {
-    public Action showBuildPanelButton, OnRoadPlacement, OnHousePlacement, OnWindmillPlacement, OnApiaryPlacement, OnShopPlacement, OnElectricGeneratorPlacement;
-    public Button placeRoadButton, placeHouseButton, placeWindmillButton, placeApiaryButton, placeShopButton, placeElectricGeneratorButton;
+    public Action OnRoadPlacement, OnHousePlacement, OnWindmillPlacement, OnApiaryPlacement, OnShopPlacement, OnElectricGeneratorPlacement;
+    public Button showBuildPanelButton, placeRoadButton, placeHouseButton, placeWindmillButton, placeApiaryButton, placeShopButton, placeElectricGeneratorButton;
 
     public Color outlineColor;
     List<Button> buttonList;
